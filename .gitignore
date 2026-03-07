@@ -1,0 +1,8 @@
+.env
+data/raw/
+data/configs/
+results/
+__pycache__/
+*.pyc
+.DS_Store
+imdb.tar
