@@ -28,14 +28,26 @@ class OpenAILLM(BaseLLM):
     def count_tokens(self, text: str) -> int:
         return len(self.enc.encode(text))
 
-    def complete(self, prompt: str, output_schema: dict) -> dict:
+    def complete(self, prompt: str, output_schema: dict, max_retries: int = 5) -> dict:
         start = time.time()
-        response = self.client.chat.completions.create(
-            model=self.model,
-            messages=[{"role": "user", "content": prompt}],
-            response_format={"type": "json_object"},
-            temperature=0,
-        )
+        for attempt in range(max_retries):
+            try:
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[{"role": "user", "content": prompt}],
+                    response_format={"type": "json_object"},
+                    temperature=0,
+                )
+                break
+            except Exception as e:
+                if "rate_limit" in str(e).lower() or "429" in str(e):
+                    wait = min(2 ** attempt * 5, 60)
+                    print(f"    Rate limited, waiting {wait}s (attempt {attempt+1}/{max_retries})...")
+                    time.sleep(wait)
+                else:
+                    raise
+        else:
+            raise RuntimeError(f"Failed after {max_retries} retries")
         latency = time.time() - start
 
         input_tokens = response.usage.prompt_tokens
