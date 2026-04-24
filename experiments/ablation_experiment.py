@@ -11,7 +11,7 @@ import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
-from models.openai_llm import OpenAILLM
+from models.factory import get_llm
 from operators.lang_filter import make_lang_filter
 from operators.genre_filter import make_genre_filter
 from operators.pipeline import QueryPipeline
@@ -42,8 +42,22 @@ def run_ablation(config_dir: str = "data/configs",
         correct_count = 0
         total_count = 0
 
+        ckpt_dir = os.path.join(output_dir, "checkpoints")
+        os.makedirs(ckpt_dir, exist_ok=True)
+
         for config_path in configs:
             config_name = os.path.splitext(os.path.basename(config_path))[0]
+            ckpt_path = os.path.join(ckpt_dir, f"s{sample_size}_{config_name}.json")
+
+            if os.path.exists(ckpt_path):
+                with open(ckpt_path) as f:
+                    cached = json.load(f)
+                all_results.append(cached)
+                correct_count += int(cached["correct"])
+                total_count += 1
+                print(f"  {config_name}: (checkpoint) correct={cached['correct']}")
+                continue
+
             df = pd.read_csv(config_path)
             if n_rows:
                 df = df.head(n_rows)
@@ -53,8 +67,8 @@ def run_ablation(config_dir: str = "data/configs",
             # Get actual best by running both orderings
             real_costs = {}
             for name, ops in [
-                ("lang_first", [make_lang_filter(OpenAILLM()), make_genre_filter(OpenAILLM())]),
-                ("genre_first", [make_genre_filter(OpenAILLM()), make_lang_filter(OpenAILLM())]),
+                ("lang_first", [make_lang_filter(get_llm()), make_genre_filter(get_llm())]),
+                ("genre_first", [make_genre_filter(get_llm()), make_lang_filter(get_llm())]),
             ]:
                 pipeline = QueryPipeline(ops)
                 _, stats = pipeline.execute(df, show_progress=False)
@@ -63,7 +77,7 @@ def run_ablation(config_dir: str = "data/configs",
             actual_best = "lang_first" if real_costs["lang_first"] <= real_costs["genre_first"] else "genre_first"
 
             # Sample-enhanced prediction
-            llm = OpenAILLM()
+            llm = get_llm()
             lang_op = make_lang_filter(llm)
             genre_op = make_genre_filter(llm)
             result = find_best_ordering_sampled(
@@ -77,14 +91,17 @@ def run_ablation(config_dir: str = "data/configs",
             correct_count += int(is_correct)
             total_count += 1
 
-            all_results.append({
+            row = {
                 "sample_size": sample_size,
                 "config": config_name,
                 "predicted": pick,
                 "actual": actual_best,
                 "correct": is_correct,
                 "real_costs": real_costs,
-            })
+            }
+            all_results.append(row)
+            with open(ckpt_path, "w") as f:
+                json.dump(row, f, indent=2, default=str)
 
             print(f"  {config_name}: predicted={pick}, actual={actual_best}, correct={is_correct}")
 

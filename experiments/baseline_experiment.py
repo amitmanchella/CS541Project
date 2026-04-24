@@ -11,7 +11,7 @@ import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
-from models.openai_llm import OpenAILLM
+from models.factory import get_llm
 from operators.lang_filter import make_lang_filter
 from operators.genre_filter import make_genre_filter
 from operators.pipeline import QueryPipeline
@@ -33,7 +33,7 @@ def run_baseline(config_path: str, output_dir: str = "results/baseline",
     tuples = df.to_dict("records")
 
     # Local optimizer prediction
-    llm = OpenAILLM()
+    llm = get_llm()
     lang_op = make_lang_filter(llm)
     genre_op = make_genre_filter(llm)
 
@@ -47,8 +47,8 @@ def run_baseline(config_path: str, output_dir: str = "results/baseline",
     # Run both orderings with real LLM calls
     results = {}
     for ordering_name, ops in [
-        ("title_then_plot", [make_lang_filter(OpenAILLM()), make_genre_filter(OpenAILLM())]),
-        ("plot_then_title", [make_genre_filter(OpenAILLM()), make_lang_filter(OpenAILLM())]),
+        ("title_then_plot", [make_lang_filter(get_llm()), make_genre_filter(get_llm())]),
+        ("plot_then_title", [make_genre_filter(get_llm()), make_lang_filter(get_llm())]),
     ]:
         print(f"\nRunning {ordering_name}...")
         pipeline = QueryPipeline(ops)

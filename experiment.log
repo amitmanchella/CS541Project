@@ -1,0 +1,122 @@
+
+--- lang0_genre0 (20 rows) ---
+  True selectivity: lang=0.00, genre=0.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=10927, latency=215.02s, cost=$0.019519
+  Real genre_first: tokens=14342, latency=229.80s, cost=$0.023563
+
+--- lang0_genre100 (20 rows) ---
+  True selectivity: lang=0.00, genre=1.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=13415, latency=1553.60s, cost=$0.024967
+  Real genre_first: tokens=18289, latency=385.33s, cost=$0.031183
+
+--- lang0_genre25 (20 rows) ---
+  True selectivity: lang=0.00, genre=0.25
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  ERROR: Error code: 503 - {'error': {'object': 'error', 'type': 'invalid_request_error', 'code': 'invalid_request_error', 'message': 'server overloaded, please try again later'}}
+
+--- lang0_genre50 (20 rows) ---
+  True selectivity: lang=0.00, genre=0.55
+  ERROR: Error code: 503 - {'error': {'object': 'error', 'type': 'invalid_request_error', 'code': 'invalid_request_error', 'message': 'server overloaded, please try again later'}}
+
+--- lang0_genre75 (20 rows) ---
+  True selectivity: lang=0.00, genre=0.70
+  ERROR: Error code: 503 - {'error': {'object': 'error', 'type': 'invalid_request_error', 'code': 'invalid_request_error', 'message': 'server overloaded, please try again later'}}
+
+--- lang100_genre0 (20 rows) ---
+  True selectivity: lang=1.00, genre=0.00
+  ERROR: Error code: 503 - {'error': {'object': 'error', 'type': 'invalid_request_error', 'code': 'invalid_request_error', 'message': 'server overloaded, please try again later'}}
+
+--- lang100_genre100 (20 rows) ---
+  True selectivity: lang=1.00, genre=1.00
+  ERROR: Error code: 503 - {'error': {'object': 'error', 'type': 'invalid_request_error', 'code': 'invalid_request_error', 'message': 'server overloaded, please try again later'}}
+
+--- lang100_genre25 (20 rows) ---
+  True selectivity: lang=1.00, genre=0.15
+  ERROR: Error code: 503 - {'error': {'object': 'error', 'type': 'invalid_request_error', 'code': 'invalid_request_error', 'message': 'server overloaded, please try again later'}}
+
+--- lang100_genre50 (20 rows) ---
+  True selectivity: lang=1.00, genre=0.50
+  ERROR: Error code: 503 - {'error': {'object': 'error', 'type': 'invalid_request_error', 'code': 'invalid_request_error', 'message': 'server overloaded, please try again later'}}
+
+--- lang100_genre75 (20 rows) ---
+  True selectivity: lang=1.00, genre=0.75
+  ERROR: Error code: 503 - {'error': {'object': 'error', 'type': 'invalid_request_error', 'code': 'invalid_request_error', 'message': 'server overloaded, please try again later'}}
+
+--- lang25_genre0 (20 rows) ---
+  True selectivity: lang=0.40, genre=0.00
+  ERROR: Error code: 503 - {'error': {'object': 'error', 'type': 'invalid_request_error', 'code': 'invalid_request_error', 'message': 'server overloaded, please try again later'}}
+
+--- lang25_genre100 (20 rows) ---
+  True selectivity: lang=0.25, genre=1.00
+  ERROR: upstream connect error or disconnect/reset before headers. reset reason: remote connection failure, transport failure reason: delayed connect error: Connection refused
+
+--- lang25_genre25 (20 rows) ---
+  True selectivity: lang=0.25, genre=0.25
+  ERROR: upstream connect error or disconnect/reset before headers. reset reason: remote connection failure, transport failure reason: delayed connect error: Connection refused
+
+--- lang25_genre50 (20 rows) ---
+  True selectivity: lang=0.10, genre=0.50
+  ERROR: no healthy upstream
+
+--- lang25_genre75 (20 rows) ---
+  True selectivity: lang=0.35, genre=0.90
+  ERROR: no healthy upstream
+
+--- lang50_genre0 (20 rows) ---
+  True selectivity: lang=0.80, genre=0.00
+  ERROR: no healthy upstream
+
+--- lang50_genre100 (20 rows) ---
+  True selectivity: lang=0.60, genre=1.00
+  ERROR: no healthy upstream
+
+--- lang50_genre25 (20 rows) ---
+  True selectivity: lang=0.65, genre=0.25
+  ERROR: no healthy upstream
+
+--- lang50_genre50 (20 rows) ---
+  True selectivity: lang=0.60, genre=0.60
+  ERROR: no healthy upstream
+
+--- lang50_genre75 (20 rows) ---
+  True selectivity: lang=0.70, genre=0.85
+  ERROR: no healthy upstream
+
+--- lang75_genre0 (20 rows) ---
+  True selectivity: lang=0.80, genre=0.00
+  ERROR: no healthy upstream
+
+--- lang75_genre100 (20 rows) ---
+  True selectivity: lang=0.80, genre=1.00
+  ERROR: no healthy upstream
+
+--- lang75_genre25 (20 rows) ---
+  True selectivity: lang=0.85, genre=0.20
+  ERROR: no healthy upstream
+
+--- lang75_genre50 (20 rows) ---
+  True selectivity: lang=0.80, genre=0.45
+  ERROR: no healthy upstream
+
+--- lang75_genre75 (20 rows) ---
+  True selectivity: lang=0.65, genre=0.65
+  ERROR: no healthy upstream
+
+============================================================
+SUMMARY
+============================================================
+Local accuracy:  100.0%
+Sample accuracy: 100.0%
+Oracle accuracy: 100.0%
+
+        config  lang_sel  genre_sel  local_correct  sample_correct  oracle_correct actual_best
+  lang0_genre0       0.0        0.0           True            True            True  lang_first
+lang0_genre100       0.0        1.0           True            True            True  lang_first

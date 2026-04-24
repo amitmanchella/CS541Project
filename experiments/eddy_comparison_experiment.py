@@ -1,9 +1,10 @@
 """
-Phase 5 - Step 5.4: Full comparison experiment.
-Compares three methods across all 25 selectivity configs:
-  1. Local only (paper baseline)
-  2. Small-sample (our contribution)
-  3. Oracle (ground truth)
+Eddy comparison experiment.
+Compares four methods across all 25 selectivity configs:
+  1. Local only (token-based, no selectivity)
+  2. Fixed-sample (20 LLM calls for sampling, then commits)
+  3. Oracle (ground truth selectivity)
+  4. Eddy with Thompson Sampling (adaptive per-tuple routing)
 """
 
 import os
@@ -23,10 +24,17 @@ from optimizer.sample_enhanced_optimizer import (
     find_best_ordering_sampled,
     find_best_ordering_oracle,
 )
+from eddy.routing_policies import ThompsonSamplingPolicy
+from eddy.router import EddyRouter
 
 
-def run_comparison(config_path: str, sample_size: int = 20,
-                   n_rows: int = None) -> dict:
+def ordering_to_key(ordering):
+    """Convert 'lang_filter -> genre_filter' to 'lang_first'."""
+    return "lang_first" if "lang_filter" in ordering.split(" -> ")[0] else "genre_first"
+
+
+def run_eddy_comparison(config_path: str, sample_size: int = 20,
+                        n_rows: int = None) -> dict:
     config_name = os.path.splitext(os.path.basename(config_path))[0]
     df = pd.read_csv(config_path)
     if n_rows:
@@ -42,14 +50,14 @@ def run_comparison(config_path: str, sample_size: int = 20,
     genre_sel = (df["genre"].str.lower() == "comedy").mean()
     print(f"  True selectivity: lang={lang_sel:.2f}, genre={genre_sel:.2f}")
 
-    # Method 1: Local only
+    # Method 1: Local only (no LLM calls for optimization)
     llm_local = get_llm()
     lang_op = make_lang_filter(llm_local)
     genre_op = make_genre_filter(llm_local)
     local_result = find_best_ordering_local([lang_op, genre_op], tuples, n)
     local_pick = local_result["best"]["ordering"]
 
-    # Method 2: Small-sample
+    # Method 2: Fixed-sample
     llm_sample = get_llm()
     lang_op_s = make_lang_filter(llm_sample)
     genre_op_s = make_genre_filter(llm_sample)
@@ -72,7 +80,29 @@ def run_comparison(config_path: str, sample_size: int = 20,
     print(f"  Sample pick: {sample_pick}")
     print(f"  Oracle pick: {oracle_pick}")
 
-    # Run actual execution for both orderings to get real costs
+    # Method 4: Eddy (Thompson Sampling)
+    llm_eddy = get_llm()
+    lang_op_e = make_lang_filter(llm_eddy)
+    genre_op_e = make_genre_filter(llm_eddy)
+    policy = ThompsonSamplingPolicy()
+    router = EddyRouter([lang_op_e, genre_op_e], policy, df)
+    eddy_result_df, eddy_stats = router.execute(df, show_progress=False)
+
+    # Determine eddy's dominant ordering (most frequently chosen)
+    ordering_counts = {}
+    for entry in eddy_stats["routing_log"]:
+        o = entry["ordering"]
+        ordering_counts[o] = ordering_counts.get(o, 0) + 1
+    eddy_dominant = max(ordering_counts, key=ordering_counts.get)
+    eddy_pick = ordering_to_key(eddy_dominant)
+
+    conv_idx, conv_ordering = router.get_convergence_point(window=10)
+    print(f"  Eddy pick:   {eddy_dominant} (dominant {ordering_counts.get(eddy_dominant,0)}/{n})")
+    print(f"  Eddy convergence: tuple {conv_idx}")
+    print(f"  Eddy tokens: {eddy_stats['total_tokens']}, "
+          f"cost=${eddy_stats['total_cost']:.6f}")
+
+    # Run actual execution for both fixed orderings to get real costs
     real_results = {}
     for name, ops in [
         ("lang_first", [make_lang_filter(get_llm()), make_genre_filter(get_llm())]),
@@ -84,11 +114,10 @@ def run_comparison(config_path: str, sample_size: int = 20,
         print(f"  Real {name}: tokens={stats['total_tokens']}, "
               f"latency={stats['total_latency']:.2f}s, cost=${stats['total_cost']:.6f}")
 
-    # Determine actual best
-    actual_best = "lang_first" if real_results["lang_first"]["total_tokens"] <= real_results["genre_first"]["total_tokens"] else "genre_first"
-
-    def ordering_to_key(ordering):
-        return "lang_first" if "lang_filter" in ordering.split(" -> ")[0] else "genre_first"
+    # Determine actual best fixed ordering
+    actual_best = ("lang_first" if real_results["lang_first"]["total_tokens"]
+                   <= real_results["genre_first"]["total_tokens"]
+                   else "genre_first")
 
     return {
         "config": config_name,
@@ -97,39 +126,29 @@ def run_comparison(config_path: str, sample_size: int = 20,
         "local_pick": ordering_to_key(local_pick),
         "sample_pick": ordering_to_key(sample_pick),
         "oracle_pick": ordering_to_key(oracle_pick),
+        "eddy_pick": eddy_pick,
         "actual_best": actual_best,
         "local_correct": ordering_to_key(local_pick) == actual_best,
         "sample_correct": ordering_to_key(sample_pick) == actual_best,
         "oracle_correct": ordering_to_key(oracle_pick) == actual_best,
+        "eddy_correct": eddy_pick == actual_best,
+        "eddy_convergence_idx": conv_idx,
+        "eddy_tokens": eddy_stats["total_tokens"],
+        "eddy_cost": eddy_stats["total_cost"],
+        "eddy_ordering_counts": ordering_counts,
         "sample_overhead_cost": sample_overhead,
         "real_results": real_results,
+        "eddy_stats": {
+            k: v for k, v in eddy_stats.items()
+            if k not in ("routing_log", "selectivity_history")
+        },
         "sample_stats": sample_result.get("sample_stats", {}),
     }
 
 
-def _checkpoint_path(output_dir, config_name):
-    return os.path.join(output_dir, "checkpoints", f"{config_name}.json")
-
-
-def _load_checkpoint(output_dir, config_name):
-    path = _checkpoint_path(output_dir, config_name)
-    if os.path.exists(path):
-        with open(path) as f:
-            return json.load(f)
-    return None
-
-
-def _save_checkpoint(output_dir, config_name, result):
-    ckpt_dir = os.path.join(output_dir, "checkpoints")
-    os.makedirs(ckpt_dir, exist_ok=True)
-    with open(_checkpoint_path(output_dir, config_name), "w") as f:
-        json.dump(result, f, indent=2, default=str)
-
-
 def run_all_configs(config_dir: str = "data/configs",
-                    output_dir: str = "results/comparison",
+                    output_dir: str = "results/eddy_comparison",
                     sample_size: int = 20, n_rows: int = None):
-    import time as _t
     os.makedirs(output_dir, exist_ok=True)
 
     configs = sorted(glob.glob(os.path.join(config_dir, "lang*_genre*.csv")))
@@ -140,26 +159,28 @@ def run_all_configs(config_dir: str = "data/configs",
     all_results = []
     for config_path in configs:
         config_name = os.path.splitext(os.path.basename(config_path))[0]
-
-        # Check for existing checkpoint
-        cached = _load_checkpoint(output_dir, config_name)
-        if cached is not None:
+        ckpt_path = os.path.join(output_dir, "checkpoints", f"{config_name}.json")
+        if os.path.exists(ckpt_path):
             print(f"\n--- {config_name} (loaded from checkpoint) ---")
-            all_results.append(cached)
+            with open(ckpt_path) as f:
+                all_results.append(json.load(f))
             continue
 
         for retry in range(5):
             try:
-                result = run_comparison(config_path, sample_size=sample_size,
-                                        n_rows=n_rows)
-                _save_checkpoint(output_dir, config_name, result)
+                result = run_eddy_comparison(config_path, sample_size=sample_size,
+                                             n_rows=n_rows)
+                os.makedirs(os.path.join(output_dir, "checkpoints"), exist_ok=True)
+                with open(ckpt_path, "w") as f:
+                    json.dump(result, f, indent=2, default=str)
                 all_results.append(result)
                 break
             except Exception as e:
+                import time as _t
                 wait = min(2 ** retry * 30, 300)
                 print(f"  ERROR (attempt {retry+1}/5): {e}")
                 if retry < 4:
-                    print(f"  Retrying config in {wait}s...")
+                    print(f"  Retrying in {wait}s...")
                     _t.sleep(wait)
                 else:
                     print(f"  GIVING UP on {config_name} after 5 attempts.")
@@ -176,6 +197,8 @@ def run_all_configs(config_dir: str = "data/configs",
         "local_correct": r["local_correct"],
         "sample_correct": r["sample_correct"],
         "oracle_correct": r["oracle_correct"],
+        "eddy_correct": r["eddy_correct"],
+        "eddy_convergence": r["eddy_convergence_idx"],
         "actual_best": r["actual_best"],
     } for r in all_results])
 
@@ -185,6 +208,8 @@ def run_all_configs(config_dir: str = "data/configs",
     print(f"Local accuracy:  {summary_df['local_correct'].mean():.1%}")
     print(f"Sample accuracy: {summary_df['sample_correct'].mean():.1%}")
     print(f"Oracle accuracy: {summary_df['oracle_correct'].mean():.1%}")
+    print(f"Eddy accuracy:   {summary_df['eddy_correct'].mean():.1%}")
+    print(f"Avg eddy convergence: {summary_df['eddy_convergence'].mean():.1f} tuples")
     print(f"\n{summary_df.to_string(index=False)}")
 
     summary_df.to_csv(os.path.join(output_dir, "summary.csv"), index=False)

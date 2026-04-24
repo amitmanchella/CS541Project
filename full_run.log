@@ -1,0 +1,937 @@
+============================================================
+CS541 SemOrder - Full Experiment Pipeline
+n_rows=100, sample_size=20
+============================================================
+
+[1/9] Building selectivity configs...
+Pool sizes: eng_comedy=18865, eng_notcomedy=66630, noteng_comedy=6883, noteng_notcomedy=28985
+  lang0_genre0.csv: 1000 rows, lang_sel=0.00, genre_sel=0.00
+  lang0_genre25.csv: 1000 rows, lang_sel=0.00, genre_sel=0.25
+  lang0_genre50.csv: 1000 rows, lang_sel=0.00, genre_sel=0.50
+  lang0_genre75.csv: 1000 rows, lang_sel=0.00, genre_sel=0.75
+  lang0_genre100.csv: 1000 rows, lang_sel=0.00, genre_sel=1.00
+  lang25_genre0.csv: 1000 rows, lang_sel=0.25, genre_sel=0.00
+  lang25_genre25.csv: 1000 rows, lang_sel=0.25, genre_sel=0.25
+  lang25_genre50.csv: 1000 rows, lang_sel=0.25, genre_sel=0.50
+  lang25_genre75.csv: 1000 rows, lang_sel=0.25, genre_sel=0.75
+  lang25_genre100.csv: 1000 rows, lang_sel=0.25, genre_sel=1.00
+  lang50_genre0.csv: 1000 rows, lang_sel=0.50, genre_sel=0.00
+  lang50_genre25.csv: 1000 rows, lang_sel=0.50, genre_sel=0.25
+  lang50_genre50.csv: 1000 rows, lang_sel=0.50, genre_sel=0.50
+  lang50_genre75.csv: 1000 rows, lang_sel=0.50, genre_sel=0.75
+  lang50_genre100.csv: 1000 rows, lang_sel=0.50, genre_sel=1.00
+  lang75_genre0.csv: 1000 rows, lang_sel=0.75, genre_sel=0.00
+  lang75_genre25.csv: 1000 rows, lang_sel=0.75, genre_sel=0.25
+  lang75_genre50.csv: 1000 rows, lang_sel=0.75, genre_sel=0.50
+  lang75_genre75.csv: 1000 rows, lang_sel=0.75, genre_sel=0.75
+  lang75_genre100.csv: 1000 rows, lang_sel=0.75, genre_sel=1.00
+  lang100_genre0.csv: 1000 rows, lang_sel=1.00, genre_sel=0.00
+  lang100_genre25.csv: 1000 rows, lang_sel=1.00, genre_sel=0.25
+  lang100_genre50.csv: 1000 rows, lang_sel=1.00, genre_sel=0.50
+  lang100_genre75.csv: 1000 rows, lang_sel=1.00, genre_sel=0.75
+  lang100_genre100.csv: 1000 rows, lang_sel=1.00, genre_sel=1.00
+
+[2/9] Building non-stationary configs...
+Pool sizes: ec=18865, enc=66630, nec=6883, nenc=28985
+  nonstat_shift50.csv: 1000 rows, overall lang_sel=0.50, genre_sel=0.50
+  nonstat_shift75.csv: 1000 rows, overall lang_sel=0.35, genre_sel=0.65
+  nonstat_gradual.csv: 1000 rows, overall lang_sel=0.50, genre_sel=0.50
+
+Done – non-stationary configs saved to /Users/amitmanchella/Downloads/CS541/data/configs
+
+[3/9] Generating token distribution figure...
+  Saved fig2_token_distribution.png
+
+[4/9] Running comparison experiment across all configs...
+
+--- lang0_genre0 (100 rows) ---
+  True selectivity: lang=0.00, genre=0.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=10734, latency=30.72s, cost=$0.009661
+  Real genre_first: tokens=18287, latency=21.74s, cost=$0.016458
+
+--- lang0_genre100 (100 rows) ---
+  True selectivity: lang=0.00, genre=1.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=10426, latency=31.23s, cost=$0.009383
+  Real genre_first: tokens=20569, latency=36.89s, cost=$0.018512
+
+--- lang0_genre25 (100 rows) ---
+  True selectivity: lang=0.00, genre=0.29
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=10344, latency=34.64s, cost=$0.009310
+  Real genre_first: tokens=20005, latency=26.73s, cost=$0.018005
+
+--- lang0_genre50 (100 rows) ---
+  True selectivity: lang=0.00, genre=0.54
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=10030, latency=31.79s, cost=$0.009027
+  Real genre_first: tokens=19262, latency=24.01s, cost=$0.017336
+
+--- lang0_genre75 (100 rows) ---
+  True selectivity: lang=0.00, genre=0.73
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=11605, latency=31.67s, cost=$0.010444
+  Real genre_first: tokens=20810, latency=20.74s, cost=$0.018729
+
+--- lang100_genre0 (100 rows) ---
+  True selectivity: lang=1.00, genre=0.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: genre_filter -> lang_filter
+  Real lang_first: tokens=24531, latency=48.94s, cost=$0.022078
+  Real genre_first: tokens=17707, latency=0.82s, cost=$0.015936
+
+--- lang100_genre100 (100 rows) ---
+  True selectivity: lang=1.00, genre=1.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=24794, latency=46.35s, cost=$0.022315
+  Real genre_first: tokens=20912, latency=0.42s, cost=$0.018821
+
+--- lang100_genre25 (100 rows) ---
+  True selectivity: lang=1.00, genre=0.24
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: genre_filter -> lang_filter
+  Real lang_first: tokens=23902, latency=51.13s, cost=$0.021512
+  Real genre_first: tokens=18206, latency=2.54s, cost=$0.016385
+
+--- lang100_genre50 (100 rows) ---
+  True selectivity: lang=1.00, genre=0.40
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: genre_filter -> lang_filter
+  Real lang_first: tokens=23059, latency=49.21s, cost=$0.020753
+  Real genre_first: tokens=18617, latency=1.52s, cost=$0.016755
+
+--- lang100_genre75 (100 rows) ---
+  True selectivity: lang=1.00, genre=0.77
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: genre_filter -> lang_filter
+  Real lang_first: tokens=24614, latency=48.51s, cost=$0.022153
+  Real genre_first: tokens=20068, latency=0.29s, cost=$0.018061
+
+--- lang25_genre0 (100 rows) ---
+  True selectivity: lang=0.26, genre=0.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=15470, latency=39.41s, cost=$0.013923
+  Real genre_first: tokens=20217, latency=14.91s, cost=$0.018195
+
+--- lang25_genre100 (100 rows) ---
+  True selectivity: lang=0.25, genre=1.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=13395, latency=36.02s, cost=$0.012056
+  Real genre_first: tokens=20172, latency=15.66s, cost=$0.018155
+
+--- lang25_genre25 (100 rows) ---
+  True selectivity: lang=0.24, genre=0.24
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=14687, latency=33.80s, cost=$0.013218
+  Real genre_first: tokens=19353, latency=14.44s, cost=$0.017418
+
+--- lang25_genre50 (100 rows) ---
+  True selectivity: lang=0.24, genre=0.56
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=13628, latency=30.45s, cost=$0.012265
+  Real genre_first: tokens=19554, latency=13.66s, cost=$0.017599
+
+--- lang25_genre75 (100 rows) ---
+  True selectivity: lang=0.30, genre=0.84
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=16368, latency=32.32s, cost=$0.014731
+  Real genre_first: tokens=22406, latency=12.64s, cost=$0.020165
+
+--- lang50_genre0 (100 rows) ---
+  True selectivity: lang=0.58, genre=0.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=19931, latency=2714.29s, cost=$0.017938
+  Real genre_first: tokens=18674, latency=7.34s, cost=$0.016807
+
+--- lang50_genre100 (100 rows) ---
+  True selectivity: lang=0.52, genre=1.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+    Retryable error, waiting 5s (attempt 1/10): Request timed out.
+  Real lang_first: tokens=17120, latency=97.04s, cost=$0.015408
+  Real genre_first: tokens=22096, latency=16.46s, cost=$0.019886
+
+--- lang50_genre25 (100 rows) ---
+  True selectivity: lang=0.48, genre=0.22
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=16869, latency=55.42s, cost=$0.015182
+  Real genre_first: tokens=19209, latency=11.82s, cost=$0.017288
+
+--- lang50_genre50 (100 rows) ---
+  True selectivity: lang=0.48, genre=0.48
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=17123, latency=44.56s, cost=$0.015411
+  Real genre_first: tokens=19904, latency=12.53s, cost=$0.017914
+
+--- lang50_genre75 (100 rows) ---
+  True selectivity: lang=0.56, genre=0.72
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=17776, latency=49.15s, cost=$0.015998
+  Real genre_first: tokens=20542, latency=12.63s, cost=$0.018488
+
+--- lang75_genre0 (100 rows) ---
+  True selectivity: lang=0.77, genre=0.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: genre_filter -> lang_filter
+  Real lang_first: tokens=20960, latency=95.09s, cost=$0.018864
+  Real genre_first: tokens=17574, latency=14.34s, cost=$0.015817
+
+--- lang75_genre100 (100 rows) ---
+  True selectivity: lang=0.76, genre=1.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=21807, latency=61.25s, cost=$0.019626
+  Real genre_first: tokens=21788, latency=9.95s, cost=$0.019609
+
+--- lang75_genre25 (100 rows) ---
+  True selectivity: lang=0.79, genre=0.21
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=22148, latency=85.99s, cost=$0.019933
+  Real genre_first: tokens=19200, latency=17.00s, cost=$0.017280
+
+--- lang75_genre50 (100 rows) ---
+  True selectivity: lang=0.76, genre=0.51
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=21488, latency=66.60s, cost=$0.019339
+  Real genre_first: tokens=20198, latency=15.38s, cost=$0.018178
+
+--- lang75_genre75 (100 rows) ---
+  True selectivity: lang=0.73, genre=0.73
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Real lang_first: tokens=20795, latency=151.77s, cost=$0.018716
+  Real genre_first: tokens=20183, latency=59.40s, cost=$0.018165
+
+============================================================
+SUMMARY
+============================================================
+Local accuracy:  56.0%
+Sample accuracy: 88.0%
+Oracle accuracy: 76.0%
+
+          config  lang_sel  genre_sel  local_correct  sample_correct  oracle_correct actual_best
+    lang0_genre0      0.00       0.00           True            True            True  lang_first
+  lang0_genre100      0.00       1.00           True            True            True  lang_first
+   lang0_genre25      0.00       0.29           True            True            True  lang_first
+   lang0_genre50      0.00       0.54           True            True            True  lang_first
+   lang0_genre75      0.00       0.73           True            True            True  lang_first
+  lang100_genre0      1.00       0.00          False            True            True genre_first
+lang100_genre100      1.00       1.00          False            True           False genre_first
+ lang100_genre25      1.00       0.24          False            True            True genre_first
+ lang100_genre50      1.00       0.40          False            True            True genre_first
+ lang100_genre75      1.00       0.77          False            True            True genre_first
+   lang25_genre0      0.26       0.00           True            True            True  lang_first
+ lang25_genre100      0.25       1.00           True            True            True  lang_first
+  lang25_genre25      0.24       0.24           True            True            True  lang_first
+  lang25_genre50      0.24       0.56           True            True            True  lang_first
+  lang25_genre75      0.30       0.84           True            True            True  lang_first
+   lang50_genre0      0.58       0.00          False           False           False genre_first
+ lang50_genre100      0.52       1.00           True            True            True  lang_first
+  lang50_genre25      0.48       0.22           True            True            True  lang_first
+  lang50_genre50      0.48       0.48           True            True            True  lang_first
+  lang50_genre75      0.56       0.72           True            True            True  lang_first
+   lang75_genre0      0.77       0.00          False            True            True genre_first
+ lang75_genre100      0.76       1.00          False           False           False genre_first
+  lang75_genre25      0.79       0.21          False            True           False genre_first
+  lang75_genre50      0.76       0.51          False            True           False genre_first
+  lang75_genre75      0.73       0.73          False           False           False genre_first
+
+[5/9] Running ablation experiment...
+
+============================================================
+Sample size: 5
+============================================================
+  lang0_genre0: predicted=lang_first, actual=lang_first, correct=True
+  lang0_genre100: predicted=lang_first, actual=lang_first, correct=True
+  lang0_genre25: predicted=lang_first, actual=lang_first, correct=True
+  lang0_genre50: predicted=lang_first, actual=lang_first, correct=True
+  lang0_genre75: predicted=lang_first, actual=lang_first, correct=True
+  lang100_genre0: predicted=genre_first, actual=genre_first, correct=True
+  lang100_genre100: predicted=lang_first, actual=genre_first, correct=False
+  lang100_genre25: predicted=genre_first, actual=genre_first, correct=True
+  lang100_genre50: predicted=lang_first, actual=genre_first, correct=False
+  lang100_genre75: predicted=genre_first, actual=genre_first, correct=True
+  lang25_genre0: predicted=lang_first, actual=lang_first, correct=True
+  lang25_genre100: predicted=lang_first, actual=lang_first, correct=True
+  lang25_genre25: predicted=lang_first, actual=lang_first, correct=True
+  lang25_genre50: predicted=lang_first, actual=lang_first, correct=True
+  lang25_genre75: predicted=lang_first, actual=lang_first, correct=True
+  lang50_genre0: predicted=lang_first, actual=genre_first, correct=False
+  lang50_genre100: predicted=lang_first, actual=lang_first, correct=True
+  lang50_genre25: predicted=lang_first, actual=lang_first, correct=True
+  lang50_genre50: predicted=lang_first, actual=lang_first, correct=True
+  lang50_genre75: predicted=lang_first, actual=lang_first, correct=True
+  lang75_genre0: predicted=genre_first, actual=genre_first, correct=True
+  lang75_genre100: predicted=lang_first, actual=genre_first, correct=False
+  lang75_genre25: predicted=genre_first, actual=genre_first, correct=True
+  lang75_genre50: predicted=genre_first, actual=genre_first, correct=True
+  lang75_genre75: predicted=lang_first, actual=genre_first, correct=False
+  Accuracy: 80.0% (20/25)
+
+============================================================
+Sample size: 10
+============================================================
+  lang0_genre0: predicted=lang_first, actual=lang_first, correct=True
+  lang0_genre100: predicted=lang_first, actual=lang_first, correct=True
+  lang0_genre25: predicted=lang_first, actual=lang_first, correct=True
+  lang0_genre50: predicted=lang_first, actual=lang_first, correct=True
+  lang0_genre75: predicted=lang_first, actual=lang_first, correct=True
+  lang100_genre0: predicted=genre_first, actual=genre_first, correct=True
+  lang100_genre100: predicted=genre_first, actual=genre_first, correct=True
+  lang100_genre25: predicted=genre_first, actual=genre_first, correct=True
+  lang100_genre50: predicted=genre_first, actual=genre_first, correct=True
+  lang100_genre75: predicted=lang_first, actual=genre_first, correct=False
+  lang25_genre0: predicted=lang_first, actual=lang_first, correct=True
+  lang25_genre100: predicted=lang_first, actual=lang_first, correct=True
+  lang25_genre25: predicted=lang_first, actual=lang_first, correct=True
+  lang25_genre50: predicted=lang_first, actual=lang_first, correct=True
+  lang25_genre75: predicted=lang_first, actual=lang_first, correct=True
+  lang50_genre0: predicted=lang_first, actual=genre_first, correct=False
+  lang50_genre100: predicted=lang_first, actual=lang_first, correct=True
+  lang50_genre25: predicted=lang_first, actual=lang_first, correct=True
+  lang50_genre50: predicted=lang_first, actual=lang_first, correct=True
+  lang50_genre75: predicted=lang_first, actual=lang_first, correct=True
+  lang75_genre0: predicted=genre_first, actual=genre_first, correct=True
+  lang75_genre100: predicted=lang_first, actual=genre_first, correct=False
+  lang75_genre25: predicted=lang_first, actual=genre_first, correct=False
+  lang75_genre50: predicted=genre_first, actual=genre_first, correct=True
+  lang75_genre75: predicted=lang_first, actual=genre_first, correct=False
+  Accuracy: 80.0% (20/25)
+
+============================================================
+Sample size: 20
+============================================================
+  lang0_genre0: predicted=lang_first, actual=lang_first, correct=True
+  lang0_genre100: predicted=lang_first, actual=lang_first, correct=True
+  lang0_genre25: predicted=lang_first, actual=lang_first, correct=True
+  lang0_genre50: predicted=lang_first, actual=lang_first, correct=True
+  lang0_genre75: predicted=lang_first, actual=lang_first, correct=True
+  lang100_genre0: predicted=genre_first, actual=genre_first, correct=True
+  lang100_genre100: predicted=genre_first, actual=genre_first, correct=True
+  lang100_genre25: predicted=genre_first, actual=genre_first, correct=True
+  lang100_genre50: predicted=genre_first, actual=genre_first, correct=True
+  lang100_genre75: predicted=genre_first, actual=genre_first, correct=True
+  lang25_genre0: predicted=lang_first, actual=lang_first, correct=True
+  lang25_genre100: predicted=lang_first, actual=lang_first, correct=True
+  lang25_genre25: predicted=lang_first, actual=lang_first, correct=True
+  lang25_genre50: predicted=lang_first, actual=lang_first, correct=True
+  lang25_genre75: predicted=lang_first, actual=lang_first, correct=True
+  lang50_genre0: predicted=lang_first, actual=genre_first, correct=False
+  lang50_genre100: predicted=lang_first, actual=lang_first, correct=True
+  lang50_genre25: predicted=lang_first, actual=lang_first, correct=True
+  lang50_genre50: predicted=lang_first, actual=lang_first, correct=True
+  lang50_genre75: predicted=lang_first, actual=lang_first, correct=True
+  lang75_genre0: predicted=genre_first, actual=genre_first, correct=True
+  lang75_genre100: predicted=lang_first, actual=genre_first, correct=False
+  lang75_genre25: predicted=genre_first, actual=genre_first, correct=True
+  lang75_genre50: predicted=genre_first, actual=genre_first, correct=True
+  lang75_genre75: predicted=lang_first, actual=genre_first, correct=False
+  Accuracy: 88.0% (22/25)
+
+Summary:
+ sample_size  accuracy
+           5      0.80
+          10      0.80
+          20      0.88
+
+[6/9] Running eddy comparison experiment...
+
+--- lang0_genre0 (100 rows) ---
+  True selectivity: lang=0.00, genre=0.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 98/100)
+  Eddy convergence: tuple 7
+  Eddy tokens: 10945, cost=$0.009850
+  Real lang_first: tokens=10734, latency=0.00s, cost=$0.009661
+  Real genre_first: tokens=18287, latency=0.00s, cost=$0.016458
+
+--- lang0_genre100 (100 rows) ---
+  True selectivity: lang=0.00, genre=1.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 100/100)
+  Eddy convergence: tuple 0
+  Eddy tokens: 10426, cost=$0.009383
+  Real lang_first: tokens=10426, latency=0.00s, cost=$0.009383
+  Real genre_first: tokens=20569, latency=0.00s, cost=$0.018512
+
+--- lang0_genre25 (100 rows) ---
+  True selectivity: lang=0.00, genre=0.29
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 100/100)
+  Eddy convergence: tuple 0
+  Eddy tokens: 10344, cost=$0.009310
+  Real lang_first: tokens=10344, latency=0.00s, cost=$0.009310
+  Real genre_first: tokens=20005, latency=0.00s, cost=$0.018005
+
+--- lang0_genre50 (100 rows) ---
+  True selectivity: lang=0.00, genre=0.54
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 100/100)
+  Eddy convergence: tuple 0
+  Eddy tokens: 10030, cost=$0.009027
+  Real lang_first: tokens=10030, latency=0.00s, cost=$0.009027
+  Real genre_first: tokens=19262, latency=0.00s, cost=$0.017336
+
+--- lang0_genre75 (100 rows) ---
+  True selectivity: lang=0.00, genre=0.73
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 97/100)
+  Eddy convergence: tuple 7
+  Eddy tokens: 11968, cost=$0.010771
+  Real lang_first: tokens=11605, latency=0.00s, cost=$0.010444
+  Real genre_first: tokens=20810, latency=0.00s, cost=$0.018729
+
+--- lang100_genre0 (100 rows) ---
+  True selectivity: lang=1.00, genre=0.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: genre_filter -> lang_filter
+  Eddy pick:   genre_filter -> lang_filter (dominant 90/100)
+  Eddy convergence: tuple 14
+  Eddy tokens: 18301, cost=$0.016471
+  Real lang_first: tokens=24531, latency=0.00s, cost=$0.022078
+  Real genre_first: tokens=17707, latency=0.00s, cost=$0.015936
+
+--- lang100_genre100 (100 rows) ---
+  True selectivity: lang=1.00, genre=1.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   genre_filter -> lang_filter (dominant 90/100)
+  Eddy convergence: tuple 16
+  Eddy tokens: 21282, cost=$0.019154
+  Real lang_first: tokens=24794, latency=0.00s, cost=$0.022315
+  Real genre_first: tokens=20912, latency=0.00s, cost=$0.018821
+
+--- lang100_genre25 (100 rows) ---
+  True selectivity: lang=1.00, genre=0.24
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: genre_filter -> lang_filter
+  Eddy pick:   genre_filter -> lang_filter (dominant 93/100)
+  Eddy convergence: tuple 15
+  Eddy tokens: 18721, cost=$0.016849
+  Real lang_first: tokens=23902, latency=0.00s, cost=$0.021512
+  Real genre_first: tokens=18206, latency=0.00s, cost=$0.016385
+
+--- lang100_genre50 (100 rows) ---
+  True selectivity: lang=1.00, genre=0.40
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: genre_filter -> lang_filter
+  Eddy pick:   genre_filter -> lang_filter (dominant 92/100)
+  Eddy convergence: tuple 10
+  Eddy tokens: 18911, cost=$0.017020
+  Real lang_first: tokens=23059, latency=0.00s, cost=$0.020753
+  Real genre_first: tokens=18617, latency=0.00s, cost=$0.016755
+
+--- lang100_genre75 (100 rows) ---
+  True selectivity: lang=1.00, genre=0.77
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: genre_filter -> lang_filter
+  Eddy pick:   genre_filter -> lang_filter (dominant 90/100)
+  Eddy convergence: tuple 20
+  Eddy tokens: 20446, cost=$0.018401
+  Real lang_first: tokens=24614, latency=0.00s, cost=$0.022153
+  Real genre_first: tokens=20068, latency=0.00s, cost=$0.018061
+
+--- lang25_genre0 (100 rows) ---
+  True selectivity: lang=0.26, genre=0.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 99/100)
+  Eddy convergence: tuple 5
+  Eddy tokens: 15524, cost=$0.013972
+  Real lang_first: tokens=15470, latency=0.00s, cost=$0.013923
+  Real genre_first: tokens=20217, latency=0.00s, cost=$0.018195
+
+--- lang25_genre100 (100 rows) ---
+  True selectivity: lang=0.25, genre=1.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 99/100)
+  Eddy convergence: tuple 8
+  Eddy tokens: 13323, cost=$0.011991
+  Real lang_first: tokens=13395, latency=0.00s, cost=$0.012056
+  Real genre_first: tokens=20172, latency=0.00s, cost=$0.018155
+
+--- lang25_genre25 (100 rows) ---
+  True selectivity: lang=0.24, genre=0.24
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 100/100)
+  Eddy convergence: tuple 0
+  Eddy tokens: 14687, cost=$0.013218
+  Real lang_first: tokens=14687, latency=0.00s, cost=$0.013218
+  Real genre_first: tokens=19353, latency=0.00s, cost=$0.017418
+
+--- lang25_genre50 (100 rows) ---
+  True selectivity: lang=0.24, genre=0.56
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 98/100)
+  Eddy convergence: tuple 4
+  Eddy tokens: 13843, cost=$0.012459
+  Real lang_first: tokens=13628, latency=0.00s, cost=$0.012265
+  Real genre_first: tokens=19554, latency=0.00s, cost=$0.017599
+
+--- lang25_genre75 (100 rows) ---
+  True selectivity: lang=0.30, genre=0.84
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 100/100)
+  Eddy convergence: tuple 0
+  Eddy tokens: 16368, cost=$0.014731
+  Real lang_first: tokens=16368, latency=0.00s, cost=$0.014731
+  Real genre_first: tokens=22406, latency=0.00s, cost=$0.020165
+
+--- lang50_genre0 (100 rows) ---
+  True selectivity: lang=0.58, genre=0.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 58/100)
+  Eddy convergence: tuple None
+  Eddy tokens: 19367, cost=$0.017430
+  Real lang_first: tokens=19931, latency=0.00s, cost=$0.017938
+  Real genre_first: tokens=18674, latency=0.00s, cost=$0.016807
+
+--- lang50_genre100 (100 rows) ---
+  True selectivity: lang=0.52, genre=1.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 97/100)
+  Eddy convergence: tuple 7
+  Eddy tokens: 17303, cost=$0.015573
+  Real lang_first: tokens=17120, latency=0.00s, cost=$0.015408
+  Real genre_first: tokens=22096, latency=0.00s, cost=$0.019886
+
+--- lang50_genre25 (100 rows) ---
+  True selectivity: lang=0.48, genre=0.22
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 97/100)
+  Eddy convergence: tuple 8
+  Eddy tokens: 16959, cost=$0.015263
+  Real lang_first: tokens=16869, latency=0.00s, cost=$0.015182
+  Real genre_first: tokens=19209, latency=0.00s, cost=$0.017288
+
+--- lang50_genre50 (100 rows) ---
+  True selectivity: lang=0.48, genre=0.48
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 80/100)
+  Eddy convergence: tuple 36
+  Eddy tokens: 17276, cost=$0.015548
+  Real lang_first: tokens=17123, latency=0.00s, cost=$0.015411
+  Real genre_first: tokens=19904, latency=0.00s, cost=$0.017914
+
+--- lang50_genre75 (100 rows) ---
+  True selectivity: lang=0.56, genre=0.72
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 93/100)
+  Eddy convergence: tuple 20
+  Eddy tokens: 17868, cost=$0.016081
+  Real lang_first: tokens=17776, latency=0.00s, cost=$0.015998
+  Real genre_first: tokens=20542, latency=0.00s, cost=$0.018488
+
+--- lang75_genre0 (100 rows) ---
+  True selectivity: lang=0.77, genre=0.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: genre_filter -> lang_filter
+  Eddy pick:   genre_filter -> lang_filter (dominant 83/100)
+  Eddy convergence: tuple 26
+  Eddy tokens: 18407, cost=$0.016566
+  Real lang_first: tokens=20960, latency=0.00s, cost=$0.018864
+  Real genre_first: tokens=17574, latency=0.00s, cost=$0.015817
+
+--- lang75_genre100 (100 rows) ---
+  True selectivity: lang=0.76, genre=1.00
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   genre_filter -> lang_filter (dominant 55/100)
+  Eddy convergence: tuple None
+  Eddy tokens: 22269, cost=$0.020042
+  Real lang_first: tokens=21807, latency=0.00s, cost=$0.019626
+  Real genre_first: tokens=21788, latency=0.00s, cost=$0.019609
+
+--- lang75_genre25 (100 rows) ---
+  True selectivity: lang=0.79, genre=0.21
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   genre_filter -> lang_filter (dominant 84/100)
+  Eddy convergence: tuple 26
+  Eddy tokens: 20050, cost=$0.018045
+  Real lang_first: tokens=22148, latency=0.00s, cost=$0.019933
+  Real genre_first: tokens=19200, latency=0.00s, cost=$0.017280
+
+--- lang75_genre50 (100 rows) ---
+  True selectivity: lang=0.76, genre=0.51
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: genre_filter -> lang_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   genre_filter -> lang_filter (dominant 80/100)
+  Eddy convergence: tuple 54
+  Eddy tokens: 20733, cost=$0.018660
+  Real lang_first: tokens=21488, latency=0.00s, cost=$0.019339
+  Real genre_first: tokens=20198, latency=0.00s, cost=$0.018178
+
+--- lang75_genre75 (100 rows) ---
+  True selectivity: lang=0.73, genre=0.73
+  Local pick:  lang_filter -> genre_filter
+  Sample pick: lang_filter -> genre_filter
+  Oracle pick: lang_filter -> genre_filter
+  Eddy pick:   lang_filter -> genre_filter (dominant 89/100)
+  Eddy convergence: tuple 5
+  Eddy tokens: 20918, cost=$0.018826
+  Real lang_first: tokens=20795, latency=0.00s, cost=$0.018716
+  Real genre_first: tokens=20183, latency=0.00s, cost=$0.018165
+
+============================================================
+SUMMARY
+============================================================
+Local accuracy:  56.0%
+Sample accuracy: 88.0%
+Oracle accuracy: 76.0%
+Eddy accuracy:   92.0%
+Avg eddy convergence: 12.5 tuples
+
+          config  lang_sel  genre_sel  local_correct  sample_correct  oracle_correct  eddy_correct  eddy_convergence actual_best
+    lang0_genre0      0.00       0.00           True            True            True          True               7.0  lang_first
+  lang0_genre100      0.00       1.00           True            True            True          True               0.0  lang_first
+   lang0_genre25      0.00       0.29           True            True            True          True               0.0  lang_first
+   lang0_genre50      0.00       0.54           True            True            True          True               0.0  lang_first
+   lang0_genre75      0.00       0.73           True            True            True          True               7.0  lang_first
+  lang100_genre0      1.00       0.00          False            True            True          True              14.0 genre_first
+lang100_genre100      1.00       1.00          False            True           False          True              16.0 genre_first
+ lang100_genre25      1.00       0.24          False            True            True          True              15.0 genre_first
+ lang100_genre50      1.00       0.40          False            True            True          True              10.0 genre_first
+ lang100_genre75      1.00       0.77          False            True            True          True              20.0 genre_first
+   lang25_genre0      0.26       0.00           True            True            True          True               5.0  lang_first
+ lang25_genre100      0.25       1.00           True            True            True          True               8.0  lang_first
+  lang25_genre25      0.24       0.24           True            True            True          True               0.0  lang_first
+  lang25_genre50      0.24       0.56           True            True            True          True               4.0  lang_first
+  lang25_genre75      0.30       0.84           True            True            True          True               0.0  lang_first
+   lang50_genre0      0.58       0.00          False           False           False         False               NaN genre_first
+ lang50_genre100      0.52       1.00           True            True            True          True               7.0  lang_first
+  lang50_genre25      0.48       0.22           True            True            True          True               8.0  lang_first
+  lang50_genre50      0.48       0.48           True            True            True          True              36.0  lang_first
+  lang50_genre75      0.56       0.72           True            True            True          True              20.0  lang_first
+   lang75_genre0      0.77       0.00          False            True            True          True              26.0 genre_first
+ lang75_genre100      0.76       1.00          False           False           False          True               NaN genre_first
+  lang75_genre25      0.79       0.21          False            True           False          True              26.0 genre_first
+  lang75_genre50      0.76       0.51          False            True           False          True              54.0 genre_first
+  lang75_genre75      0.73       0.73          False           False           False         False               5.0 genre_first
+
+[7/9] Running eddy policy comparison...
+
+--- Policy comparison: lang0_genre0 (100 rows) ---
+  thompson_sampling   : pick=lang_first, correct=True, conv=0, tokens=10734
+  ucb                 : pick=lang_first, correct=True, conv=6, tokens=10619
+  epsilon_greedy      : pick=lang_first, correct=True, conv=0, tokens=11327
+  lottery             : pick=lang_first, correct=True, conv=8, tokens=10997
+
+--- Policy comparison: lang0_genre100 (100 rows) ---
+  thompson_sampling   : pick=lang_first, correct=True, conv=0, tokens=10426
+  ucb                 : pick=lang_first, correct=True, conv=2, tokens=10479
+  epsilon_greedy      : pick=lang_first, correct=True, conv=10, tokens=11562
+  lottery             : pick=lang_first, correct=True, conv=15, tokens=11236
+
+--- Policy comparison: lang0_genre25 (100 rows) ---
+  thompson_sampling   : pick=lang_first, correct=True, conv=0, tokens=10344
+  ucb                 : pick=lang_first, correct=True, conv=2, tokens=10271
+  epsilon_greedy      : pick=lang_first, correct=True, conv=23, tokens=11787
+  lottery             : pick=lang_first, correct=True, conv=9, tokens=10881
+
+--- Policy comparison: lang0_genre50 (100 rows) ---
+  thompson_sampling   : pick=lang_first, correct=True, conv=0, tokens=10030
+  ucb                 : pick=lang_first, correct=True, conv=2, tokens=10210
+  epsilon_greedy      : pick=lang_first, correct=True, conv=0, tokens=10590
+  lottery             : pick=lang_first, correct=True, conv=10, tokens=10453
+
+--- Policy comparison: lang0_genre75 (100 rows) ---
+  thompson_sampling   : pick=lang_first, correct=True, conv=5, tokens=11764
+  ucb                 : pick=lang_first, correct=True, conv=4, tokens=11808
+  epsilon_greedy      : pick=lang_first, correct=True, conv=5, tokens=12529
+  lottery             : pick=lang_first, correct=True, conv=6, tokens=12132
+
+--- Policy comparison: lang100_genre0 (100 rows) ---
+  thompson_sampling   : pick=genre_first, correct=True, conv=12, tokens=18453
+  ucb                 : pick=genre_first, correct=True, conv=3, tokens=17780
+  epsilon_greedy      : pick=genre_first, correct=True, conv=13, tokens=18669
+  lottery             : pick=genre_first, correct=True, conv=19, tokens=18187
+
+--- Policy comparison: lang100_genre100 (100 rows) ---
+  thompson_sampling   : pick=genre_first, correct=True, conv=16, tokens=21279
+  ucb                 : pick=genre_first, correct=True, conv=11, tokens=20986
+  epsilon_greedy      : pick=genre_first, correct=True, conv=36, tokens=21430
+  lottery             : pick=genre_first, correct=True, conv=10, tokens=21504
+
+--- Policy comparison: lang100_genre25 (100 rows) ---
+  thompson_sampling   : pick=genre_first, correct=True, conv=20, tokens=19093
+  ucb                 : pick=genre_first, correct=True, conv=1, tokens=18280
+  epsilon_greedy      : pick=genre_first, correct=True, conv=15, tokens=19060
+  lottery             : pick=genre_first, correct=True, conv=26, tokens=18885
+
+--- Policy comparison: lang100_genre50 (100 rows) ---
+  thompson_sampling   : pick=genre_first, correct=True, conv=16, tokens=18985
+  ucb                 : pick=genre_first, correct=True, conv=1, tokens=18617
+  epsilon_greedy      : pick=genre_first, correct=True, conv=10, tokens=18911
+  lottery             : pick=genre_first, correct=True, conv=21, tokens=19096
+
+--- Policy comparison: lang100_genre75 (100 rows) ---
+  thompson_sampling   : pick=genre_first, correct=True, conv=21, tokens=20592
+  ucb                 : pick=genre_first, correct=True, conv=6, tokens=20153
+  epsilon_greedy      : pick=genre_first, correct=True, conv=34, tokens=20433
+  lottery             : pick=genre_first, correct=True, conv=10, tokens=20446
+
+--- Policy comparison: lang25_genre0 (100 rows) ---
+  thompson_sampling   : pick=lang_first, correct=True, conv=4, tokens=15590
+  ucb                 : pick=genre_first, correct=False, conv=1, tokens=20293
+  epsilon_greedy      : pick=lang_first, correct=True, conv=1, tokens=15795
+  lottery             : pick=lang_first, correct=True, conv=12, tokens=15910
+
+--- Policy comparison: lang25_genre100 (100 rows) ---
+  thompson_sampling   : pick=lang_first, correct=True, conv=0, tokens=13664
+  ucb                 : pick=lang_first, correct=True, conv=2, tokens=13395
+  epsilon_greedy      : pick=lang_first, correct=True, conv=8, tokens=14000
+  lottery             : pick=lang_first, correct=True, conv=10, tokens=13393
+
+--- Policy comparison: lang25_genre25 (100 rows) ---
+  thompson_sampling   : pick=lang_first, correct=True, conv=0, tokens=14687
+  ucb                 : pick=lang_first, correct=True, conv=13, tokens=15180
+  epsilon_greedy      : pick=lang_first, correct=True, conv=31, tokens=14900
+  lottery             : pick=lang_first, correct=True, conv=10, tokens=14812
+
+--- Policy comparison: lang25_genre50 (100 rows) ---
+  thompson_sampling   : pick=lang_first, correct=True, conv=4, tokens=13846
+  ucb                 : pick=lang_first, correct=True, conv=2, tokens=13708
+  epsilon_greedy      : pick=lang_first, correct=True, conv=14, tokens=14691
+  lottery             : pick=lang_first, correct=True, conv=10, tokens=13958
+
+--- Policy comparison: lang25_genre75 (100 rows) ---
+  thompson_sampling   : pick=lang_first, correct=True, conv=0, tokens=16368
+  ucb                 : pick=lang_first, correct=True, conv=7, tokens=16461
+  epsilon_greedy      : pick=lang_first, correct=True, conv=2, tokens=16838
+  lottery             : pick=lang_first, correct=True, conv=7, tokens=16860
+
+--- Policy comparison: lang50_genre0 (100 rows) ---
+  thompson_sampling   : pick=genre_first, correct=True, conv=45, tokens=19890
+  ucb                 : pick=genre_first, correct=True, conv=1, tokens=18751
+  epsilon_greedy      : pick=lang_first, correct=False, conv=3, tokens=19333
+  lottery             : pick=genre_first, correct=True, conv=9, tokens=18982
+
+--- Policy comparison: lang50_genre100 (100 rows) ---
+  thompson_sampling   : pick=lang_first, correct=True, conv=0, tokens=17120
+  ucb                 : pick=lang_first, correct=True, conv=1, tokens=19122
+  epsilon_greedy      : pick=lang_first, correct=True, conv=10, tokens=17317
+  lottery             : pick=lang_first, correct=True, conv=9, tokens=17587
+
+--- Policy comparison: lang50_genre25 (100 rows) ---
+  thompson_sampling   : pick=lang_first, correct=True, conv=30, tokens=17132
+  ucb                 : pick=lang_first, correct=True, conv=4, tokens=16846
+  epsilon_greedy      : pick=genre_first, correct=False, conv=1, tokens=18559
+  lottery             : pick=lang_first, correct=True, conv=28, tokens=17568
+
+--- Policy comparison: lang50_genre50 (100 rows) ---
+  thompson_sampling   : pick=lang_first, correct=True, conv=33, tokens=17667
+  ucb                 : pick=genre_first, correct=False, conv=1, tokens=19976
+  epsilon_greedy      : pick=lang_first, correct=True, conv=7, tokens=17891
+  lottery             : pick=lang_first, correct=True, conv=14, tokens=18200
+
+--- Policy comparison: lang50_genre75 (100 rows) ---
+  thompson_sampling   : pick=lang_first, correct=True, conv=13, tokens=17637
+  ucb                 : pick=genre_first, correct=False, conv=1, tokens=20614
+  epsilon_greedy      : pick=lang_first, correct=True, conv=28, tokens=17663
+  lottery             : pick=lang_first, correct=True, conv=22, tokens=18261
+
+--- Policy comparison: lang75_genre0 (100 rows) ---
+  thompson_sampling   : pick=genre_first, correct=True, conv=87, tokens=19013
+  ucb                 : pick=genre_first, correct=True, conv=1, tokens=17645
+  epsilon_greedy      : pick=genre_first, correct=True, conv=7, tokens=17802
+  lottery             : pick=genre_first, correct=True, conv=15, tokens=18499
+
+--- Policy comparison: lang75_genre100 (100 rows) ---
+  thompson_sampling   : pick=genre_first, correct=True, conv=None, tokens=23267
+  ucb                 : pick=genre_first, correct=True, conv=4, tokens=21863
+  epsilon_greedy      : pick=lang_first, correct=False, conv=16, tokens=21844
+  lottery             : pick=lang_first, correct=False, conv=11, tokens=21581
+
+--- Policy comparison: lang75_genre25 (100 rows) ---
+  thompson_sampling   : pick=genre_first, correct=True, conv=90, tokens=19796
+  ucb                 : pick=genre_first, correct=True, conv=8, tokens=19453
+  epsilon_greedy      : pick=genre_first, correct=True, conv=33, tokens=19980
+  lottery             : pick=genre_first, correct=True, conv=10, tokens=19657
+
+--- Policy comparison: lang75_genre50 (100 rows) ---
+  thompson_sampling   : pick=genre_first, correct=True, conv=0, tokens=21003
+  ucb                 : pick=genre_first, correct=True, conv=7, tokens=20276
+  epsilon_greedy      : pick=genre_first, correct=True, conv=12, tokens=20150
+  lottery             : pick=lang_first, correct=False, conv=22, tokens=21227
+
+--- Policy comparison: lang75_genre75 (100 rows) ---
+  thompson_sampling   : pick=lang_first, correct=False, conv=2, tokens=21069
+  ucb                 : pick=genre_first, correct=True, conv=1, tokens=20255
+  epsilon_greedy      : pick=genre_first, correct=True, conv=10, tokens=20448
+  lottery             : pick=genre_first, correct=True, conv=10, tokens=20707
+
+============================================================
+POLICY COMPARISON SUMMARY
+============================================================
+           policy  accuracy  avg_convergence  avg_tokens  avg_cost
+   epsilon_greedy      0.88        13.160000    16940.36  0.015246
+          lottery      0.92        13.320000    16840.76  0.015157
+thompson_sampling      0.96        16.583333    16777.96  0.015100
+              ucb      0.88         3.680000    16921.64  0.015229
+
+[8/9] Running eddy non-stationary experiment...
+
+--- Non-stationary: nonstat_gradual (100 rows) ---
+  rows    0-  10: lang=0.20, genre=1.00
+  rows   10-  20: lang=0.30, genre=0.50
+  rows   20-  30: lang=0.30, genre=0.70
+  rows   30-  40: lang=0.40, genre=0.80
+  rows   40-  50: lang=0.00, genre=0.90
+  rows   50-  60: lang=0.00, genre=0.60
+  rows   60-  70: lang=0.30, genre=0.90
+  rows   70-  80: lang=0.20, genre=0.90
+  rows   80-  90: lang=0.30, genre=0.90
+  rows   90- 100: lang=0.00, genre=0.80
+  Local pick: lang_first, tokens=13537
+  Sample pick: lang_first, tokens=13537
+  Eddy tokens: 13537
+
+--- Non-stationary: nonstat_shift50 (100 rows) ---
+  rows    0-  10: lang=0.10, genre=0.80
+  rows   10-  20: lang=0.30, genre=0.70
+  rows   20-  30: lang=0.10, genre=0.90
+  rows   30-  40: lang=0.00, genre=0.80
+  rows   40-  50: lang=0.10, genre=0.50
+  rows   50-  60: lang=0.40, genre=0.90
+  rows   60-  70: lang=0.30, genre=0.60
+  rows   70-  80: lang=0.20, genre=0.90
+  rows   80-  90: lang=0.00, genre=0.80
+  rows   90- 100: lang=0.10, genre=0.80
+  Local pick: lang_first, tokens=12470
+  Sample pick: lang_first, tokens=12470
+  Eddy tokens: 12470
+
+--- Non-stationary: nonstat_shift75 (100 rows) ---
+  rows    0-  10: lang=0.30, genre=0.90
+  rows   10-  20: lang=0.20, genre=0.70
+  rows   20-  30: lang=0.20, genre=0.80
+  rows   30-  40: lang=0.10, genre=0.70
+  rows   40-  50: lang=0.30, genre=0.60
+  rows   50-  60: lang=0.20, genre=0.90
+  rows   60-  70: lang=0.20, genre=0.90
+  rows   70-  80: lang=0.10, genre=0.90
+  rows   80-  90: lang=0.20, genre=0.80
+  rows   90- 100: lang=0.20, genre=0.80
+  Local pick: lang_first, tokens=14335
+  Sample pick: lang_first, tokens=14335
+  Eddy tokens: 14335
+
+============================================================
+NON-STATIONARY SUMMARY
+============================================================
+
+nonstat_gradual:
+  Local  (lang_first  ):  13537 tokens, $0.012183
+  Sample (lang_first  ):  13537 tokens, $0.012183
+  Eddy   (adaptive       ):  13537 tokens, $0.012183
+
+nonstat_shift50:
+  Local  (lang_first  ):  12470 tokens, $0.011223
+  Sample (lang_first  ):  12470 tokens, $0.011223
+  Eddy   (adaptive       ):  12470 tokens, $0.011223
+
+nonstat_shift75:
+  Local  (lang_first  ):  14335 tokens, $0.012901
+  Sample (lang_first  ):  14335 tokens, $0.012901
+  Eddy   (adaptive       ):  14335 tokens, $0.012901
+
+[9/9] Generating all figures...
+Generating figures...
+  Saved fig2_token_distribution.png
+  Saved fig3_selectivity_comparison.png
+  Saved fig4_ordering_accuracy.png
+  Saved fig5_ablation_curve.png
+  Saved fig6_eddy_accuracy.png
+  Saved fig7_convergence.png
+  Saved fig8_policy_comparison.png
+  Saved fig9_nonstationary_nonstat_gradual.png
+  Saved fig9_nonstationary_nonstat_shift50.png
+  Saved fig9_nonstationary_nonstat_shift75.png
+  Saved fig10_cost_savings.png
+Done!
+
+============================================================
+DONE! Check results/ directory for outputs.
+============================================================

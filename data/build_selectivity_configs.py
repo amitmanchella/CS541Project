@@ -7,6 +7,8 @@ Selectivity levels: 0%, 25%, 50%, 75%, 100%.
 import pandas as pd
 import numpy as np
 import os
+from .build_dataset import load_raw_tables
+
 
 DATA_DIR = os.path.dirname(__file__)
 FULL_PATH = os.path.join(DATA_DIR, "movies_full.csv")
@@ -26,7 +28,7 @@ def load_full():
 
 def build_all_configs():
     # We need a large pool to sample from. Reload from raw with more movies.
-    from build_dataset import load_raw_tables
+    from .build_dataset import load_raw_tables
     movies, genres, languages, plots = load_raw_tables()
 
     df = movies.merge(languages, on="movie_id", how="inner")
